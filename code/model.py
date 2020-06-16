@@ -76,7 +76,10 @@ class EvacuationModel(Model):
 
 
     def step(self):
-        self.schedule.step()
+        if self.schedule.get_agent_count() == 0:
+            exit()
+        else:
+            self.schedule.step()
 
 empty_model = EvacuationModel()
 empty_model.step()
