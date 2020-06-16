@@ -34,6 +34,6 @@ grid = CanvasGrid(agent_portrayal, 21, 21, 500, 500)
 server = ModularServer(EvacuationModel,
                        [grid],
                        "Evacuation Model",
-                       {"N":22, "width":11, "height":11})
+                       {"N":20, "width":11, "height":11})
 server.port = 8421 # The default
 server.launch()
