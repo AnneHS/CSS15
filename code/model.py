@@ -20,8 +20,6 @@ class EvacuationModel(Model):
         self.grid = MultiGrid(self.width, self.height, torus=False)
         self.schedule = RandomActivation(self)
 
-
-
         # Add N pedestrians
         for i in range(self.num_agents):
 
@@ -104,7 +102,6 @@ class EvacuationModel(Model):
 
         # Save the statistics
         self.data_collector.collect(self)
-
 
 
 empty_model = EvacuationModel()
