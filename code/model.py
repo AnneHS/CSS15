@@ -1,6 +1,8 @@
 from mesa import Model
 from mesa.space import MultiGrid
 from mesa.time import RandomActivation
+from mesa.datacollection import DataCollector
+
 
 from agent import Pedestrian, Wall, Exit
 
@@ -74,12 +76,36 @@ class EvacuationModel(Model):
                 self.grid.place_agent(w, (x, y))
 
 
+        self.data_collector = DataCollector({
+            "Evacuees": lambda m: self.count_evacuees(),
+            "Evacuated": lambda m: self.count_evacuated()
+        })
+
+         # this is required for the data_collector to work
+        self.running = True
+        self.data_collector.collect(self)
+
+    def count_evacuees(self):
+        count = self.schedule.get_agent_count()
+        print('EVACUEES COUNT')
+        print(count)
+        print()
+        return count
+
+    def count_evacuated(self):
+         count = self.num_agents - self.schedule.get_agent_count()
+         return count
 
     def step(self):
         if self.schedule.get_agent_count() == 0:
             exit()
         else:
             self.schedule.step()
+
+        # Save the statistics
+        self.data_collector.collect(self)
+
+
 
 empty_model = EvacuationModel()
 empty_model.step()

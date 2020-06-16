@@ -15,12 +15,12 @@ class Pedestrian(Agent):
         traversable=True
         if not self.model.grid.is_cell_empty(pos):
             contents = self.model.grid.get_cell_list_contents([pos])
-            print(self.unique_id)
+            #print(self.unique_id)
             for agent in contents:
-                print(type(agent))
+                #print(type(agent))
                 if not agent.traversable:
                     traversable=False
-        print()
+        #print()
 
         return traversable
 
@@ -29,13 +29,13 @@ class Pedestrian(Agent):
         Check if at exit.
         '''
         exit_reached = False
-        print(self.unique_id)
-        print("At exit")
-        print(self.pos)
-        print()
+        #print(self.unique_id)
+        #print("At exit")
+        #print(self.pos)
+        #print()
         if not self.model.grid.is_cell_empty(self.pos):
             contents = self.model.grid.get_cell_list_contents([self.pos])
-            print(contents)
+            #print(contents)
 
             for agent in contents:
                 if isinstance(agent, Exit):
@@ -75,6 +75,8 @@ class Pedestrian(Agent):
     def step(self):
 
         self.move()
+
+        
 
 
 class Wall(Agent):
