@@ -9,8 +9,9 @@ class Pedestrian(Agent):
         self.traversable=False
 
     def location_is_traversable(self, pos):
-
-        # Check if location traversable
+        '''
+        Check if cell is traversable (walls aren't).
+        '''
         if not self.model.grid.is_cell_empty(pos):
             contents = self.model.grid.get_cell_list_contents([self.pos])
             for agent in contents:

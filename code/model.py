@@ -20,9 +20,8 @@ class EvacuationModel(Model):
 
 
 
-
+        # Add N pedestrians
         for i in range(self.num_agents):
-
 
             # Add the agent to a random grid cell
             x = self.random.randrange(1, self.grid.width-1)
@@ -50,7 +49,7 @@ class EvacuationModel(Model):
             self.schedule.add(w)
             self.grid.place_agent(w, (x, y))
 
-
+        # Place horizontal walls
         for i in range(self.width):
 
             # Up
@@ -64,6 +63,7 @@ class EvacuationModel(Model):
             x=i
             y=self.height-1
 
+            # One exit
             if x == self.exit_x and y == self.exit_y:
                 e = Exit(self, (x, y))
                 self.schedule.add(e)

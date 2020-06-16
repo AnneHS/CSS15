@@ -35,5 +35,5 @@ server = ModularServer(EvacuationModel,
                        [grid],
                        "Evacuation Model",
                        {"N":22, "width":11, "height":11})
-server.port = 8488 # The default
+server.port = 8421 # The default
 server.launch()
