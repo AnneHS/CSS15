@@ -55,7 +55,7 @@ class Pedestrian(Agent):
             possible_steps = self.model.grid.get_neighborhood(
                 self.pos,
                 moore=True,
-                include_center=False)
+                include_center=True)
 
             # Traversable steps
             # TODO: faster
@@ -65,11 +65,29 @@ class Pedestrian(Agent):
                     traversable_steps.append(step)
 
             if len(traversable_steps) > 0:
-                # Random move
-                new_position = self.random.choice(traversable_steps)
+                # move toward exit - add types of movement later
+
+                #this should be automatic
+                exit_x = round(11/2)
+                exit_y = 10      
+                
+                traversable_steps.append(self.pos)
+                steps = [max(abs(exit_x-candidate[0]), abs(exit_y-candidate[1])) for candidate in traversable_steps]
+                #steps that produce shortest possible path
+                min_steps = min(steps)
+                potential = [traversable_steps[i] for i in range(len(steps)) if steps[i]==min_steps]
+                #avoid zig-zagging
+                potential2 = [i for i in potential if (abs(i[0]-exit_x)-abs(self.pos[0]-exit_x))<1]
+                if (len(potential2)>0):
+                    potential = potential2
+                    
+                    
+                new_position = self.random.choice(potential)
                 self.model.grid.move_agent(self, new_position)
             else:
                 self.model.grid.move_agent(self, self.pos)
+
+        #print ("pos:", self.pos)
 
 
     def step(self):

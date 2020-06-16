@@ -2,13 +2,12 @@ from mesa import Model
 from mesa.space import MultiGrid
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
-###test
 
 from agent import Pedestrian, Wall, Exit
 
 class EvacuationModel(Model):
 
-    def __init__(self, N=10, height=21, width=21):
+    def __init__(self, N=20, height=21, width=21):
         super().__init__()
         self.height = height
         self.width = width
@@ -24,7 +23,6 @@ class EvacuationModel(Model):
 
         # Add N pedestrians
         for i in range(self.num_agents):
-
             # Add the agent to a random grid cell
             x = self.random.randrange(1, self.grid.width-1)
             y = self.random.randrange(1, self.grid.height-1)
