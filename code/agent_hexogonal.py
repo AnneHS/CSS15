@@ -67,9 +67,12 @@ class Pedestrian(Agent):
                     print(self.push, agent.push)
                     push_prob = self.model.push_probs[self.push, agent.push]
                     if push_prob > self.random.random():
-                        print(self.push, agent.push, self.pos, agent.pos)
-                        self.model.grid.move_agent(agent, self.pos)
-                        self.model.grid.move_agent(self, new_position)
+                        print(self.push, agent.push, self.pos, agent.pos, new_position)
+                        pos = self.pos
+                        self.model.grid.remove_agent(self)
+                        self.model.grid.remove_agent(agent)
+                        self.model.grid.place_agent(agent, pos)
+                        self.model.grid.place_agent(self, new_position)
                     return
 
         self.model.grid.move_agent(self, new_position)
@@ -115,18 +118,11 @@ class Pedestrian(Agent):
 
 
                 new_position = self.random.choice(potential)
-                #print("if")
-                #print(self.unique_id)
-                #print(self.pos)
-                self.pushing(new_position)
+                if not new_position == self.pos:
+                    self.pushing(new_position)
                 #print(self.pos)
                 #print()
-                #self.pos = new_position
-            else:
-                #not needed?
-                self.model.grid.move_agent(self, self.pos)
-                #print(self.pos)
-                #print()
+                #self.pos = new_positio
         #print ("pos:", self.pos)
 
 

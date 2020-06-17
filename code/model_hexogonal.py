@@ -61,7 +61,7 @@ class EvacuationModel(Model):
                 w = Wall(self, (x, y))
                 #self.schedule.add(w)
                 self.grid.place_agent(w, (x, y))
-                
+
             # Right
             x=self.width-1
             y=i
@@ -98,9 +98,10 @@ class EvacuationModel(Model):
 
             # One exit
             if x == self.exit_x and y == self.exit_y:
-                e = Exit(self, (x, y))
+                #e = Exit(self, (x, y))
                 #self.schedule.add(e)
-                self.grid.place_agent(e, (x, y))
+                #self.grid.place_agent(e, (x, y))
+                continue
             else:
                 w = Wall(self, (x, y))
                 #self.schedule.add(w)
