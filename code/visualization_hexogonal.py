@@ -27,7 +27,7 @@ def agent_portrayal(agent):
         portrayal = {"Shape": "hex",
                      "Filled": "true",
                      "Layer": 0,
-                     "Color": "white",
+                     "Color": "yellow",
                      "r": 0.5}
 
     elif type(agent) is Wall:

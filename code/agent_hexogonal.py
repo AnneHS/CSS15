@@ -18,6 +18,9 @@ class Pedestrian(Agent):
         traversable=True
         if not self.model.grid.is_cell_empty(pos):
             contents = self.model.grid.get_cell_list_contents([pos])
+            if pos[0] == self.exit_x and pos[1] == self.exit_y:
+                print('important')
+                print(contents)
             #print(self.unique_id)
             for agent in contents:
                 #print(agent)
