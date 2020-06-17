@@ -2,11 +2,13 @@
 from mesa import Agent
 
 class Pedestrian(Agent):
-    def __init__(self, unique_id, model, pos):
+    def __init__(self, unique_id, model, pos, exit_x, exit_y):
         super().__init__(unique_id, model)
         #self.unique_id = unique_id
         self.pos=pos
         self.traversable=False
+        self.exit_x = exit_x
+        self.exit_y = exit_y
 
     def location_is_traversable(self, pos):
         '''
@@ -68,20 +70,20 @@ class Pedestrian(Agent):
                 # move toward exit - add types of movement later
 
                 #this should be automatic
-                exit_x = round(11/2)
-                exit_y = 10      
-                
+                #self.exit_x = round(11/2)
+                #self.exit_y = 10
+
                 traversable_steps.append(self.pos)
-                steps = [max(abs(exit_x-candidate[0]), abs(exit_y-candidate[1])) for candidate in traversable_steps]
+                steps = [max(abs(self.exit_x-candidate[0]), abs(self.exit_y-candidate[1])) for candidate in traversable_steps]
                 #steps that produce shortest possible path
                 min_steps = min(steps)
                 potential = [traversable_steps[i] for i in range(len(steps)) if steps[i]==min_steps]
                 #avoid zig-zagging
-                potential2 = [i for i in potential if (abs(i[0]-exit_x)-abs(self.pos[0]-exit_x))<1]
+                potential2 = [i for i in potential if (abs(i[0]-self.exit_x)-abs(self.pos[0]-self.exit_x))<1]
                 if (len(potential2)>0):
                     potential = potential2
-                    
-                    
+
+
                 new_position = self.random.choice(potential)
                 self.model.grid.move_agent(self, new_position)
             else:
@@ -94,7 +96,7 @@ class Pedestrian(Agent):
 
         self.move()
 
-        
+
 
 
 class Wall(Agent):

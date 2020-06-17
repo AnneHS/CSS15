@@ -25,7 +25,7 @@ class EvacuationModel(Model):
             x = self.random.randrange(1, self.grid.width-1)
             y = self.random.randrange(1, self.grid.height-1)
 
-            a = Pedestrian(i, self, (x, y))
+            a = Pedestrian(i, self, (x, y), self.exit_x, self.exit_y)
             self.schedule.add(a)
 
             self.grid.place_agent(a, (x, y))
