@@ -11,7 +11,7 @@ from agent import Pedestrian, Wall, Exit
 
 class EvacuationModel(Model):
 
-    def __init__(self, N=20, height=21, width=21):
+    def __init__(self, N=20, height=21, width=21, push_ratio = 0.5):
         super().__init__()
         self.height = height
         self.width = width
@@ -25,18 +25,27 @@ class EvacuationModel(Model):
         self.grid = MultiGrid(self.width, self.height, torus=False)
         self.schedule = RandomActivation(self)
 
+        # decide for ID whether it is a pusher
+        is_pusher = np.zeros(N)
+        idx = self.random.sample([i for i in range(N)], int(push_ratio * N))
+        is_pusher[idx] = 1
+        
         # Add N pedestrians
+        taken_pos = []
         for i in range(self.num_agents):
             # Add the agent to a random grid cell
-            push = self.random.choice([0,1])
-            x = self.random.randrange(1, self.grid.width-1)
-            y = self.random.randrange(1, self.grid.height-1)
-
-            a = Pedestrian(i, self, (x, y), self.exit_x, self.exit_y, push)
+            while True:
+                x = self.random.randrange(1, self.grid.width-1)
+                y = self.random.randrange(1, self.grid.height-1)
+                pos = (x,y)
+                if not pos in taken_pos:
+                    break
+            
+            a = Pedestrian(i, self, pos, self.exit_x, self.exit_y, is_pusher[i])
             self.schedule.add(a)
 
-            self.grid.place_agent(a, (x, y))
-
+            self.grid.place_agent(a, pos)
+            taken_pos.append(pos)
         # Place vertical walls
         for i in range(self.height):
 

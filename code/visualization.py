@@ -50,11 +50,11 @@ evacuatedChart = ChartModule(
     data_collector_name='data_collector'
 )
 
-grid = CanvasGrid(agent_portrayal, 21, 21, 500, 500)
+grid = CanvasGrid(agent_portrayal, 50, 50, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":10, "width":10, "height":10})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":50, "width":10, "height":10})
 
 '''
 server = ModularServer(EvacuationModel,
