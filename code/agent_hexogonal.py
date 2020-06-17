@@ -128,7 +128,7 @@ class Pedestrian(Agent):
 
 
     def step(self):
-
+        print(self.unique_id, self.pos, end = "")
         self.move()
 
 

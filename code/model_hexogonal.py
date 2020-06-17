@@ -17,8 +17,8 @@ class EvacuationModel(Model):
         self.width = width
         self.num_agents = N
 
-        self.exit_x = round(self.width/2)
-        self.exit_y = self.height-1
+        self.exit_x = self.width - 1
+        self.exit_y = round(self.height/2)
 
         self.push_probs = np.array([[0.,0.],[1.,0.5]])
 
@@ -40,13 +40,12 @@ class EvacuationModel(Model):
                 pos = (x,y)
                 if not pos in taken_pos:
                     break
-            
             a = Pedestrian(i, self, pos, self.exit_x, self.exit_y, is_pusher[i])
             self.schedule.add(a)
 
             self.grid.place_agent(a, pos)
             taken_pos.append(pos)
-            print(taken_pos)
+        print(len(taken_pos))
         # Place vertical walls
         for i in range(self.height):
 
@@ -63,6 +62,17 @@ class EvacuationModel(Model):
             w = Wall(self, (x, y))
             #self.schedule.add(w)
             self.grid.place_agent(w, (x, y))
+
+            # One exit
+            if x == self.exit_x and y == self.exit_y:
+                e = Exit(self, (x, y))
+                #self.schedule.add(e)
+                self.grid.place_agent(e, (x, y))
+            else:
+                w = Wall(self, (x, y))
+                #self.schedule.add(w)
+                self.grid.place_agent(w, (x, y))
+
 
         # Place horizontal walls
         for i in range(self.width):
@@ -110,12 +120,12 @@ class EvacuationModel(Model):
          return count
 
     def step(self):
-
+        print(self.schedule.get_agent_count())
         if self.schedule.get_agent_count() == 0:
             exit()
         else:
             self.schedule.step()
-    
+        print("")
         self.data_collector.collect(self)
 
 

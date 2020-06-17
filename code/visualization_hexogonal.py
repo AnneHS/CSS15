@@ -24,18 +24,18 @@ def agent_portrayal(agent):
                          "Color": "green",
                          "r": 0.5}
     elif type(agent) is Exit:
-        portrayal = {"Shape": "circle",
+        portrayal = {"Shape": "hex",
                      "Filled": "true",
                      "Layer": 0,
                      "Color": "white",
-                     "r": .5}
+                     "r": 0.5}
 
     elif type(agent) is Wall:
-        portrayal = {"Shape": "circle",
+        portrayal = {"Shape": "hex",
                      "Filled": "true",
                      "Layer": 0,
                      "Color": "blue",
-                     "r": .5}
+                     "r": 0.5}
     return portrayal
 
 evacueesChart = ChartModule(
@@ -52,7 +52,7 @@ grid = CanvasHexGrid(agent_portrayal, 20, 20, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":, "width":10, "height":10})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":10, "width":10, "height":10})
 
 '''
 server = ModularServer(EvacuationModel,
