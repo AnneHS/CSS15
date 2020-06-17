@@ -1,11 +1,11 @@
 from mesa import Model
-from mesa.space import MultiGrid
+from mesa.space import HexGrid
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 
 import numpy as np
 
-from agent import Pedestrian, Wall, Exit
+from agent_hexogonal import Pedestrian, Wall, Exit
 
 
 
@@ -22,7 +22,7 @@ class EvacuationModel(Model):
 
         self.push_probs = np.array([[0.,0.],[1.,0.5]])
 
-        self.grid = MultiGrid(self.width, self.height, torus=False)
+        self.grid = HexGrid(self.width, self.height, torus=False)
         self.schedule = RandomActivation(self)
 
         # decide for ID whether it is a pusher
@@ -46,6 +46,7 @@ class EvacuationModel(Model):
 
             self.grid.place_agent(a, pos)
             taken_pos.append(pos)
+            print(taken_pos)
         # Place vertical walls
         for i in range(self.height):
 
