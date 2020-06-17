@@ -11,11 +11,18 @@ from agent import Pedestrian, Wall, Exit
 def agent_portrayal(agent):
 
     if type(agent) is Pedestrian:
-        portrayal = {"Shape": "circle",
-                     "Filled": "true",
-                     "Layer": 1,
-                     "Color": "red",
-                     "r": 0.5}
+        if agent.push > 0:
+            portrayal = {"Shape": "circle",
+                         "Filled": "true",
+                         "Layer": 1,
+                         "Color": "red",
+                         "r": 0.5}
+        else:
+            portrayal = {"Shape": "circle",
+                         "Filled": "true",
+                         "Layer": 1,
+                         "Color": "green",
+                         "r": 0.5}
     elif type(agent) is Exit:
         portrayal = {"Shape": "rect",
                      "Filled": "true",
@@ -47,7 +54,7 @@ grid = CanvasGrid(agent_portrayal, 21, 21, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":5, "width":11, "height":11})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":10, "width":10, "height":10})
 
 '''
 server = ModularServer(EvacuationModel,

@@ -2,13 +2,14 @@
 from mesa import Agent
 
 class Pedestrian(Agent):
-    def __init__(self, unique_id, model, pos, exit_x, exit_y):
+    def __init__(self, unique_id, model, pos, exit_x, exit_y, push_type):
         super().__init__(unique_id, model)
         #self.unique_id = unique_id
         self.pos=pos
         self.traversable=False
         self.exit_x = exit_x
         self.exit_y = exit_y
+        self.push = push_type
 
     def location_is_traversable(self, pos):
         '''
@@ -19,11 +20,12 @@ class Pedestrian(Agent):
             contents = self.model.grid.get_cell_list_contents([pos])
             #print(self.unique_id)
             for agent in contents:
-                #print(type(agent))
+                #print(agent)
                 if not agent.traversable:
-                    traversable=False
-        #print()
-
+                    if self.push > 0 and isinstance(agent, Pedestrian):
+                        continue
+                    else:
+                        traversable = False
         return traversable
 
     def at_exit(self):
@@ -45,13 +47,29 @@ class Pedestrian(Agent):
         if not self.model.grid.is_cell_empty(self.pos):
             contents = self.model.grid.get_cell_list_contents([self.pos])
             #print(contents)
-
             for agent in contents:
                 if isinstance(agent, Exit):
                     exit_reached = True
         '''
 
         return exit_reached
+
+    def pushing(self, new_position):
+        
+        contents = self.model.grid.get_cell_list_contents([new_position])
+        
+        if len(contents) > 0:
+            for agent in contents:
+                if isinstance(agent, Pedestrian):
+                    push_prob = self.model.push_probs[self.push, agent.push]
+                    if push_prob > self.random.random():
+                        print(self.push, agent.push, self.pos, agent.pos)
+                        self.model.grid.move_agent(agent, self.pos)
+                        self.model.grid.move_agent(self, new_position)
+                    return
+
+        self.model.grid.move_agent(self, new_position)
+
 
     def move(self):
 
@@ -94,20 +112,18 @@ class Pedestrian(Agent):
 
 
                 new_position = self.random.choice(potential)
-                print("if")
-                print(self.unique_id)
-                print(self.pos)
-                self.model.grid.move_agent(self, new_position)
-                print(self.pos)
-                print()
+                #print("if")
+                #print(self.unique_id)
+                #print(self.pos)
+                self.pushing(new_position)
+                #print(self.pos)
+                #print()
                 #self.pos = new_position
             else:
-                print('else')
-                print(self.unique_id)
-                print(self.pos)
+                #not needed?
                 self.model.grid.move_agent(self, self.pos)
-                print(self.pos)
-                print()
+                #print(self.pos)
+                #print()
         #print ("pos:", self.pos)
 
 

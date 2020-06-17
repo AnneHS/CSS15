@@ -3,7 +3,11 @@ from mesa.space import MultiGrid
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 
+import numpy as np
+
 from agent import Pedestrian, Wall, Exit
+
+
 
 class EvacuationModel(Model):
 
@@ -16,16 +20,19 @@ class EvacuationModel(Model):
         self.exit_x = round(self.width/2)
         self.exit_y = self.height-1
 
+        self.push_probs = np.array([[0.,0.],[1.,0.5]])
+
         self.grid = MultiGrid(self.width, self.height, torus=False)
         self.schedule = RandomActivation(self)
 
         # Add N pedestrians
         for i in range(self.num_agents):
             # Add the agent to a random grid cell
+            push = self.random.choice([0,1])
             x = self.random.randrange(1, self.grid.width-1)
             y = self.random.randrange(1, self.grid.height-1)
 
-            a = Pedestrian(i, self, (x, y), self.exit_x, self.exit_y)
+            a = Pedestrian(i, self, (x, y), self.exit_x, self.exit_y, push)
             self.schedule.add(a)
 
             self.grid.place_agent(a, (x, y))
