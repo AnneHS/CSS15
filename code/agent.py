@@ -35,6 +35,13 @@ class Pedestrian(Agent):
         #print("At exit")
         #print(self.pos)
         #print()
+        if self.pos[0] == self.exit_x and self.pos[1] == self.exit_y:
+            #print(str(self.unique_id) + 'HAS REACHED EXIT')
+            #print(self.pos)
+            #print()
+            exit_reached = True
+
+        '''
         if not self.model.grid.is_cell_empty(self.pos):
             contents = self.model.grid.get_cell_list_contents([self.pos])
             #print(contents)
@@ -42,12 +49,14 @@ class Pedestrian(Agent):
             for agent in contents:
                 if isinstance(agent, Exit):
                     exit_reached = True
+        '''
 
         return exit_reached
 
     def move(self):
 
         if self.at_exit():
+            print(str(self.unique_id) + "has exited")
             self.model.schedule.remove(self)
             self.model.grid.remove_agent(self)
 
@@ -85,10 +94,20 @@ class Pedestrian(Agent):
 
 
                 new_position = self.random.choice(potential)
+                print("if")
+                print(self.unique_id)
+                print(self.pos)
                 self.model.grid.move_agent(self, new_position)
+                print(self.pos)
+                print()
+                #self.pos = new_position
             else:
+                print('else')
+                print(self.unique_id)
+                print(self.pos)
                 self.model.grid.move_agent(self, self.pos)
-
+                print(self.pos)
+                print()
         #print ("pos:", self.pos)
 
 

@@ -13,23 +13,22 @@ def agent_portrayal(agent):
     if type(agent) is Pedestrian:
         portrayal = {"Shape": "circle",
                      "Filled": "true",
-                     "Layer": 0,
+                     "Layer": 1,
                      "Color": "red",
                      "r": 0.5}
+    elif type(agent) is Exit:
+        portrayal = {"Shape": "rect",
+                     "Filled": "true",
+                     "Layer": 0,
+                     "Color": "white",
+                     "w": 1,
+                     "h": 1}
 
     elif type(agent) is Wall:
         portrayal = {"Shape": "rect",
                      "Filled": "true",
                      "Layer": 0,
                      "Color": "blue",
-                     "w": 1,
-                     "h": 1}
-
-    elif type(agent) is Exit:
-        portrayal = {"Shape": "rect",
-                     "Filled": "true",
-                     "Layer": 0,
-                     "Color": "white",
                      "w": 1,
                      "h": 1}
     return portrayal
@@ -48,7 +47,7 @@ grid = CanvasGrid(agent_portrayal, 21, 21, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":20, "width":11, "height":11})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":5, "width":11, "height":11})
 
 '''
 server = ModularServer(EvacuationModel,
@@ -56,5 +55,5 @@ server = ModularServer(EvacuationModel,
                        "Evacuation Model",
                        {"N":1, "width":11, "height":11})
 '''
-server.port = 8421 # The default
+server.port = 8422 # The default
 server.launch()

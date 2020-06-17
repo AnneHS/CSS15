@@ -93,13 +93,16 @@ class EvacuationModel(Model):
          return count
 
     def step(self):
+
         if self.schedule.get_agent_count() == 0:
             exit()
         else:
             self.schedule.step()
-
-        # Save the statistics
+    
         self.data_collector.collect(self)
+
+
+
 
 
 empty_model = EvacuationModel()
