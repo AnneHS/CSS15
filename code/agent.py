@@ -1,5 +1,6 @@
 # https://github.com/Chadsr/MesaFireEvacuation
 from mesa import Agent
+import math
 
 class Pedestrian(Agent):
     def __init__(self, unique_id, model, pos, exit_x, exit_y, push_type):
@@ -10,6 +11,7 @@ class Pedestrian(Agent):
         self.exit_x = exit_x
         self.exit_y = exit_y
         self.push = push_type
+        self.exit_time = math.inf
 
     def location_is_traversable(self, pos):
         '''
@@ -55,9 +57,9 @@ class Pedestrian(Agent):
         return exit_reached
 
     def pushing(self, new_position):
-        
+
         contents = self.model.grid.get_cell_list_contents([new_position])
-        
+
         if len(contents) > 0:
             for agent in contents:
                 if isinstance(agent, Pedestrian):
@@ -74,7 +76,11 @@ class Pedestrian(Agent):
     def move(self):
 
         if self.at_exit():
-            print(str(self.unique_id) + "has exited")
+            print(str(self.unique_id) + " has exited")
+
+            self.exit_time = self.model.schedule.time
+            self.model.exit_times.append(self.exit_time)
+
             self.model.schedule.remove(self)
             self.model.grid.remove_agent(self)
 

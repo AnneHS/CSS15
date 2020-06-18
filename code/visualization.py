@@ -50,7 +50,7 @@ evacuatedChart = ChartModule(
     data_collector_name='data_collector'
 )
 
-grid = CanvasGrid(agent_portrayal, 50, 50, 500, 500)
+grid = CanvasGrid(agent_portrayal, 21, 21, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
