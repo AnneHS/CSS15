@@ -24,9 +24,9 @@ def main(iter, N, h, w, hex, pr):
 
     # Name of .npy file to save exit times.
     if hex:
-        fileName = f'data/HEX_N{N}_h{h}_w{w}_pr{pr}.npy' # HexGrid
+        fileName = f'data/HEX{iter}_N{N}_h{h}_w{w}_pr{pr}.npy' # HexGrid
     else:
-        fileName = f'dataMULTI_N{N}_h{h}_w{w}_pr{pr}.npy' # MultiGrid
+        fileName = f'data/MULTI{iter}_N{N}_h{h}_w{w}_pr{pr}.npy' # MultiGrid
 
     # Save exit_times of all runs to one .npy file
     np.save(fileName, exit_times)
