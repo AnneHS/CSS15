@@ -9,6 +9,7 @@ from model_merge import EvacuationModel
 
 def main(iter, N, h, w, hex, pr):
 
+
     print("RUNNING Evacution model for " + str(iter) + ' ITERATION(S)\n' +
     "N: " + str(N) + "\n"
     "Height: " + str(h) + "\n"
@@ -30,11 +31,6 @@ def main(iter, N, h, w, hex, pr):
 
     # Save exit_times of all runs to one .npy file
     np.save(fileName, exit_times)
-
-    # LOAD test
-    #print('RELOADED')
-    #reloaded_exit_times = np.load(fileName)
-    #print(reloaded_exit_times)
 
 if __name__ == '__main__':
     main(iter=2, N=50, h=10, w=10, hex=False, pr=0.5)
