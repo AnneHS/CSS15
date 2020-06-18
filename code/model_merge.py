@@ -59,12 +59,12 @@ class EvacuationModel(Model):
         # Place vertical walls
         for i in range(self.height):
 
-            
+
             X=[0, self.width - 1]
             y=i
 
             # Left and right
-            for x in X: 
+            for x in X:
                 if not (x == self.exit_x and y == self.exit_y):
                     w = Wall(self, (x, y))
                     self.grid.place_agent(w, (x, y))
@@ -92,14 +92,26 @@ class EvacuationModel(Model):
         self.data_collector.collect(self)
 
     def count_evacuees(self):
+        '''
+        Returns number of pedestrians in room.
+        '''
+
         count = self.schedule.get_agent_count()
         return count
 
     def count_evacuated(self):
-         count = self.num_agents - self.schedule.get_agent_count()
-         return count
+
+        '''
+        Returns number of pedestrians that have exited.
+        '''
+
+        count = self.num_agents - self.schedule.get_agent_count()
+        return count
 
     def plot(self):
+        '''
+        Plots histogram of exit times with bins of size 5.
+        '''
 
         # Average exit time
         sum=0
@@ -108,7 +120,7 @@ class EvacuationModel(Model):
         avg = sum/len(self.exit_times)
 
         # Exit times bins
-        L = self.exit_times[-1] - 0
+        L = self.exit_times[-1]
         bin_size = 5
         min_edge = 0
         max_edge = math.ceil(L/bin_size) * bin_size
@@ -116,11 +128,12 @@ class EvacuationModel(Model):
         Nplus1 = N+1
         bin_list = np.linspace(min_edge, max_edge, Nplus1)
 
-        print()
-        print(self.exit_times)
-        print(L)
-        print(max_edge)
-        print()
+        #print()
+        #print(self.exit_times)
+        #print(L)
+        #print(max_edge)
+        #print()
+
         # Exit times histogram
         plt.hist(self.exit_times, bin_list, edgecolor="k")
         plt.title("Average = " + str(avg))
@@ -136,6 +149,17 @@ class EvacuationModel(Model):
         if self.schedule.get_agent_count() == 0:
             self.plot()
             self.running=False
+            return
 
         self.schedule.step()
         self.data_collector.collect(self)
+
+    def run_model(self):
+        '''
+        Used to run model multiple times (main.py), returns the exit times.
+        '''
+
+        while self.schedule.get_agent_count() > 0:
+            self.step()
+
+        return self.exit_times

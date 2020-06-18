@@ -5,7 +5,6 @@ import math
 class Pedestrian(Agent):
     def __init__(self, unique_id, model, pos, exit_x, exit_y, push_type):
         super().__init__(unique_id, model)
-        #self.unique_id = unique_id
         self.pos=pos
         self.traversable=False
         self.exit_x = exit_x
@@ -15,14 +14,13 @@ class Pedestrian(Agent):
 
     def location_is_traversable(self, pos):
         '''
-        Check if cell is traversable (walls aren't).
+        Check if cell is traversable (walls and pedestrians aren't).
         '''
         traversable=True
         if not self.model.grid.is_cell_empty(pos):
             contents = self.model.grid.get_cell_list_contents([pos])
-            #print(self.unique_id)
+
             for agent in contents:
-                #print(agent)
                 if not agent.traversable:
                     if self.push > 0 and isinstance(agent, Pedestrian):
                         continue
@@ -35,24 +33,10 @@ class Pedestrian(Agent):
         Check if at exit.
         '''
         exit_reached = False
-        #print(self.unique_id)
-        #print("At exit")
-        #print(self.pos)
-        #print()
         if self.pos[0] == self.exit_x and self.pos[1] == self.exit_y:
-            #print(str(self.unique_id) + 'HAS REACHED EXIT')
-            #print(self.pos)
-            #print()
+
             exit_reached = True
 
-        '''
-        if not self.model.grid.is_cell_empty(self.pos):
-            contents = self.model.grid.get_cell_list_contents([self.pos])
-            #print(contents)
-            for agent in contents:
-                if isinstance(agent, Exit):
-                    exit_reached = True
-        '''
 
         return exit_reached
 
