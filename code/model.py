@@ -137,20 +137,10 @@ class EvacuationModel(Model):
 
     def step(self):
 
-
+        # Stop run if all Pedestrians have exited
         if self.schedule.get_agent_count() == 0:
             self.plot()
-            exit()
-        else:
-            self.schedule.step()
-
+            self.running=False
 
         self.schedule.step()
         self.data_collector.collect(self)
-
-
-
-
-
-empty_model = EvacuationModel()
-empty_model.step()
