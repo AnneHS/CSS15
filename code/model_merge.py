@@ -14,12 +14,14 @@ from agent_merge import Pedestrian, Wall
 
 class EvacuationModel(Model):
 
-    def __init__(self, N=20, height=21, width=21, hexogonal=True, push_ratio = 0.5):
+    def __init__(self, N=20, height=21, width=21, hexogonal=True, push_ratio = 0.5, fluster_factor = 0, calm_factor = 0):
         super().__init__()
         self.height = height
         self.width = width
         self.num_agents = N
         self.hex = hexogonal
+        self.fluster_factor = fluster_factor
+        self.calm_factor = calm_factor
 
         self.exit_x = self.width - 1
         self.exit_y = round(self.height/2)
@@ -35,6 +37,7 @@ class EvacuationModel(Model):
 
         self.schedule = RandomActivation(self)
 
+        inital_mood_prob = 0
         # decide for ID whether it is a pusher
         is_pusher = np.zeros(N, dtype = int)
         idx = self.random.sample([i for i in range(N)], int(push_ratio * N))
@@ -50,7 +53,7 @@ class EvacuationModel(Model):
                 pos = (x,y)
                 if not pos in taken_pos:
                     break
-            a = Pedestrian(i, self, pos, self.exit_x, self.exit_y, is_pusher[i])
+            a = Pedestrian(i, self, pos, self.exit_x, self.exit_y, is_pusher[i], inital_mood_prob)
             self.schedule.add(a)
 
             self.grid.place_agent(a, pos)
@@ -150,7 +153,7 @@ class EvacuationModel(Model):
             self.plot()
             self.running=False
             return
-
+        
         self.schedule.step()
         self.data_collector.collect(self)
 
@@ -158,8 +161,9 @@ class EvacuationModel(Model):
         '''
         Used to run model multiple times (main.py), returns the exit times.
         '''
-
-        while self.schedule.get_agent_count() > 0:
+        steps = 0
+        while self.schedule.get_agent_count() > 0 and steps < 10 ** 8:
             self.step()
+            steps += 1
 
         return self.exit_times
