@@ -3,7 +3,7 @@ from mesa import Agent
 import math
 
 class Pedestrian(Agent):
-    def __init__(self, unique_id, model, pos, exit_x, exit_y, push_type):
+    def __init__(self, unique_id, model, pos, exit_x, exit_y, push_type, mood_change_prob):
         super().__init__(unique_id, model)
         #self.unique_id = unique_id
         self.pos=pos
@@ -12,6 +12,7 @@ class Pedestrian(Agent):
         self.exit_y = exit_y
         self.push = push_type
         self.exit_time = math.inf
+        self.mood_change_prob = mood_change_prob
 
     def location_is_traversable(self, pos):
         '''
@@ -22,7 +23,7 @@ class Pedestrian(Agent):
         if not self.model.grid.is_cell_empty(pos):
             contents = self.model.grid.get_cell_list_contents([pos])
             for agent in contents:
-                if not agent.traversable:
+                if not agent.traversable: # not needed
                     if not (self.push > 0 and isinstance(agent, Pedestrian)):
                         traversable = False
         return traversable
@@ -48,7 +49,6 @@ class Pedestrian(Agent):
                     push_prob = self.model.push_probs[self.push, agent.push]
                     if push_prob > self.random.random():
                         pos = self.pos
-                        print(pos, new_position)
                         self.model.grid.remove_agent(self)
                         self.model.grid.remove_agent(agent)
                         self.model.grid.place_agent(agent, pos)
@@ -75,14 +75,12 @@ class Pedestrian(Agent):
             
             if self.model.hex:
                 possible_steps = self.model.grid.get_neighborhood(
-                    self.pos,
-                    include_center=True)
+                    self.pos)
 
             else:
                 possible_steps = self.model.grid.get_neighborhood(
                     self.pos,
-                    moore=True,
-                    include_center=True)
+                    moore=True)
 
             # Traversable steps
             # TODO: faster
@@ -107,16 +105,37 @@ class Pedestrian(Agent):
                 if (len(potential2)>0):
                     potential = potential2
 
-                print(potential)
                 new_position = self.random.choice(potential)
                 
-                print(traversable_steps, self.pos)
                 if not new_position == self.pos:
                     self.pushing(new_position)
 
+    def change_mood(self):
+        if self.push == 0:
+            if self.mood_change_prob > self.random.random():
+                self.push = 1
+        
+        if self.push == 1:
+            if self.model.calm_factor > self.random.random():
+                self.push = 0
+
+    def fluster_probablity(self):
+        if self.model.hex:
+            content = self.model.grid.get_neighbors(self.pos)
+        else:
+            content = self.model.grid.get_neighbors(self.pos, moore=True)
+        
+        fluster_count = 0
+        for agent in content:
+            if isinstance(agent, Pedestrian):
+                if agent.push == 1:
+                    fluster_count += 1
+
+        self.mood_change_prob = 1 - (1-self.model.fluster_factor)**fluster_count
 
     def step(self):
-
+        self.change_mood()
+        self.fluster_probablity()
         self.move()
 
 
