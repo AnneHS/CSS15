@@ -54,7 +54,7 @@ else:
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":500, "width":25, "height":25, "hexogonal": HEX})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":250, "width":25, "height":25, "hexogonal": HEX})
 
 
 server.port = 8422 # The default

@@ -1,6 +1,7 @@
 # https://github.com/Chadsr/MesaFireEvacuation
 from mesa import Agent
 import math
+import random
 
 class Pedestrian(Agent):
     def __init__(self, unique_id, model, pos, exit_x, exit_y, push_type):
@@ -92,13 +93,18 @@ class Pedestrian(Agent):
 
                 traversable_steps.append(self.pos)
                 steps = [max(abs(self.exit_x-candidate[0]), abs(self.exit_y-candidate[1])) for candidate in traversable_steps]
+                bad_steps = [traversable_steps[i] for i in range(len(steps)) if steps[i]!=min_steps and traversable_steps[i][0]>self.pos[0]]
                 #steps that produce shortest possible path
                 min_steps = min(steps)
                 potential = [traversable_steps[i] for i in range(len(steps)) if steps[i]==min_steps]
                 #avoid zig-zagging
-                potential2 = [i for i in potential if (abs(i[0]-self.exit_x)-abs(self.pos[0]-self.exit_x))<1]
-                if (len(potential2)>0):
-                    potential = potential2
+                if (self.push==0):
+                    potential2 = [i for i in potential if (abs(i[0]-self.exit_x)-abs(self.pos[0]-self.exit_x))<1]
+                    if (len(potential2)>0):
+                        potential = potential2
+
+                if random.random() < 0.2 and len(bad_steps)>0:
+                    new_position = self.random.choice(bad_steps)
 
 
                 new_position = self.random.choice(potential)

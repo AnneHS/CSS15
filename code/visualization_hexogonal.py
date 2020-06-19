@@ -48,11 +48,11 @@ evacuatedChart = ChartModule(
     data_collector_name='data_collector'
 )
 
-grid = CanvasHexGrid(agent_portrayal, 20, 20, 500, 500)
+grid = CanvasHexGrid(agent_portrayal, 25, 25, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":10, "width":10, "height":10})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":250, "width":25, "height":25})
 
 '''
 server = ModularServer(EvacuationModel,
