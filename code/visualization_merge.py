@@ -9,7 +9,7 @@ from matplotlib import cm, colors
 
 from agent_merge import Pedestrian, Wall
 
-HEX = False
+HEX = True
 
 def agent_portrayal(agent):
 
