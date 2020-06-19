@@ -109,7 +109,7 @@ class Pedestrian(Agent):
                 #steps that produce shortest possible path
                 min_steps = min(steps)
                 potential = [traversable_steps[i] for i in range(len(steps)) if steps[i]==min_steps]
-                bad_steps = [traversable_steps[i] for i in range(len(steps)) if steps[i]!=min_steps and traversable_steps[i][0]>self.pos[0]]
+                bad_steps = [traversable_steps[i] for i in range(len(steps)) if steps[i]!=min_steps and traversable_steps[i][0]>=self.pos[0]]
                 
                 #avoid zig-zagging
                 if (self.push==0):
