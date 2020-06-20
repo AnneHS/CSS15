@@ -70,7 +70,7 @@ for param in params:
     plt.title(str(param) + ' Pedestrians')
     plt.xlabel("Escape time")
     plt.savefig('plots/pedestrians/escape_times_' + str(param))
-    # plt.show()
+    plt.show()
 
 # Plot mean, min, max, std etc.
 plt.figure()
@@ -93,4 +93,4 @@ plt.legend()
 plt.xlabel('Number of pedestrians')
 plt.ylabel('escape time')
 plt.savefig('plots/pedestrians/pedestrian_variation_values')
-#plt.show()
+plt.show()

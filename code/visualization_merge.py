@@ -9,7 +9,17 @@ from matplotlib import cm, colors
 
 from agent_merge import Pedestrian, Wall
 
-HEX = False
+HEX = True
+
+model_params = {
+    "N": UserSettableParameter('slider', 'Population size', value=250, min_value=1, max_value=500),
+    "height": 25,
+    "width": 25,
+    "hexogonal": HEX,
+    "push_ratio": UserSettableParameter('slider', 'Push ratio', value=0.5, min_value=0, max_value=1, step=0.05),
+    "fluster_factor": UserSettableParameter('slider', 'Fluster factor', value=0.5, min_value=0, max_value=1, step=0.05),
+    "calm_factor": UserSettableParameter('slider', 'Calm factor', value=0.5, min_value=0, max_value=1, step=0.05),
+}
 
 def agent_portrayal(agent):
 
@@ -54,7 +64,7 @@ else:
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":250, "width":25, "height":25, "hexogonal": HEX})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", model_params)#{"N":250, "width":25, "height":25, "hexogonal": HEX})
 
 
 server.port = 8422 # The default
