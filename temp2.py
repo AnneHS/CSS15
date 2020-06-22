@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import math
 
 '''
-Used to create plots for variation in number of pedestrians.
+Used to create plots for variation in number of pedestrians and varying push
+ratios.
 '''
 
 #params = [100, 150, 200, 250, 300, 350, 400, 450, 500] # Nr of agents
