@@ -6,7 +6,8 @@ import math
 Used to create plots for variation in number of pedestrians.
 '''
 
-params = [100, 150, 200, 250, 300, 350, 400, 450, 500] # Nr of agents
+#params = [100, 150, 200, 250, 300, 350, 400, 450, 500] # Nr of agents
+params = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] # Push ratio
 
 min_val = []
 min_std = []
@@ -23,7 +24,7 @@ std_std = []
 for param in params:
 
     # Load data
-    fileName = 'data/HEX100_N' + str(param) + '_h25_w25_pr0.5.npy'
+    fileName = 'data/HEX100_N300_h25_w25_pr' +  str(param) + '.npy'
     file = np.load(fileName)
 
     # Mean, min, max and stds for each run for given parameters
@@ -67,16 +68,20 @@ for param in params:
     # Exit times histogram
     plt.figure()
     plt.hist(exit_data, bin_list, edgecolor="k")
-    plt.title(str(param) + ' Pedestrians')
+    plt.title('Push ratio: ' + str(param))
     plt.xlabel("Escape time")
-    plt.savefig('plots/pedestrians/escape_times_' + str(param))
+    variable_name = str(int(param * 10))
+    print(variable_name)
+    plt.savefig('plots/push_ratios/escape_times_' + variable_name)
     plt.show()
 
 # Plot mean, min, max, std etc.
 plt.figure()
 
 #x = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
-x = [100, 150, 200, 250, 300, 350, 400, 450, 500]
+#x = [100, 150, 200, 250, 300, 350, 400, 450, 500] # Nr. of agent
+x = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] # Push ratio
+
 plt.plot(x, mean_val, color = 'black', label='mean')
 plt.errorbar(x,mean_val, color = 'black',yerr = mean_std)
 
@@ -90,7 +95,7 @@ plt.plot(x, min_val, color = 'green', label='min' )
 plt.errorbar(x,min_val, color = 'green', yerr = min_std)
 
 plt.legend()
-plt.xlabel('Number of pedestrians')
+plt.xlabel('Push ratio')
 plt.ylabel('escape time')
-plt.savefig('plots/pedestrians/pedestrian_variation_values')
+plt.savefig('plots/push_ratios/push_ratio_variation_values')
 plt.show()
