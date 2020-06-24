@@ -7,7 +7,7 @@ import numpy as np
 
 from model_merge import EvacuationModel
 
-def main(iter, N, h, w, hex, pr):
+def main(iter, N, h, w, hex, pr, ff, cf):
 
     push_ratio = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
     
@@ -18,7 +18,9 @@ def main(iter, N, h, w, hex, pr):
         "Height: " + str(h) + "\n"
         "Width: " + str(h) + "\n"
         "Hexogonal: " + str(hex) + "\n"
-        "Push Ratio: " + str(pr))
+        "Push Ratio: " + str(pr)  + "\n"
+        "Fluster factor: " + str(ff) + "\n"
+        "Calm factor: " + str(cf))
 
         swap_times = np.zeros((iter, 1500))
         for i in range(iter):

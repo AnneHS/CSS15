@@ -8,6 +8,7 @@ from matplotlib import cm, colors
 
 from agent import Pedestrian, Wall, Exit
 
+
 def agent_portrayal(agent):
 
     if type(agent) is Pedestrian:

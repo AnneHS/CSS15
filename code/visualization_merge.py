@@ -11,6 +11,16 @@ from agent_merge import Pedestrian, Wall
 
 HEX = True
 
+model_params = {
+    "N": UserSettableParameter('slider', 'Population size', value=250, min_value=1, max_value=500),
+    "height": 25,
+    "width": 25,
+    "hexogonal": HEX,
+    "push_ratio": UserSettableParameter('slider', 'Push ratio', value=0.5, min_value=0, max_value=1, step=0.05),
+    "fluster_factor": UserSettableParameter('slider', 'Fluster factor', value=0.5, min_value=0, max_value=1, step=0.05),
+    "calm_factor": UserSettableParameter('slider', 'Calm factor', value=0.5, min_value=0, max_value=1, step=0.05),
+}
+
 def agent_portrayal(agent):
 
     if type(agent) is Pedestrian:
