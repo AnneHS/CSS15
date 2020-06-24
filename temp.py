@@ -10,7 +10,7 @@ var_names = ['fluster = ', 'calm =', 'fluster = ']
 
 
 for param in range(3):
-	
+
 	min_val = []
 	min_std = []
 
@@ -31,7 +31,7 @@ for param in range(3):
 	    	x.append(float(np_name[37:40]))
 
 	    file = np.load(np_name)
-	    
+
 	    means = []
 	    mins = []
 	    maxs = []
@@ -79,12 +79,12 @@ for param in range(3):
 
 
 	bins = [i*15 for i in range(60)]
-	
+
 	plt.figure()
 	al = 1.
 	i = 1
 	for np_name in glob.glob(names[param]):
-		
+
 		print(al)
 		if param == 0:
 			f = np_name[32:35]
@@ -97,8 +97,8 @@ for param in range(3):
 		plt.hist(one_d, bins, alpha = al, label = var_names[param] + f)
 		i += 1
 		#al -= 0.09
-	
-	plt.show()	
+
+	plt.show()
 
 	# plt.legend()
 	# plt.xlabel('escape time')
@@ -107,7 +107,7 @@ for param in range(3):
 
 	i = 1
 	for np_name in glob.glob(names[param]):
-		
+
 		print(al)
 		if param == 0:
 			f = np_name[32:35]
@@ -126,7 +126,7 @@ for param in range(3):
 		plt.hist(differences, label = var_names[param] + f)
 		i += 1
 		#al -= 0.09
-	
+
 	plt.show()
 
 	# plt.legend()

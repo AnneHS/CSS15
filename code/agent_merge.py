@@ -54,6 +54,7 @@ class Pedestrian(Agent):
                         self.model.grid.remove_agent(agent)
                         self.model.grid.place_agent(agent, pos)
                         self.model.grid.place_agent(self, new_position)
+                        self.model.swap_times.append(self.model.schedule.time)
                     return
 
         self.model.grid.move_agent(self, new_position)
@@ -62,8 +63,8 @@ class Pedestrian(Agent):
     def move(self):
 
         if self.at_exit():
-            print(str(self.unique_id) + " has exited")
-
+            #print(str(self.unique_id) + " has exited")
+            #print(self.model.swap_times)
             self.exit_time = self.model.schedule.time
             self.model.exit_times.append(self.exit_time)
 

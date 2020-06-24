@@ -9,7 +9,7 @@ from matplotlib import cm, colors
 
 from agent_merge import Pedestrian, Wall
 
-HEX = False
+HEX = True
 
 def agent_portrayal(agent):
 
@@ -48,13 +48,13 @@ evacuatedChart = ChartModule(
 )
 
 if HEX:
-    grid = CanvasHexGrid(agent_portrayal, 27, 27, 500, 500)
+    grid = CanvasHexGrid(agent_portrayal, 51, 51, 500, 500)
 else:
-    grid = CanvasGrid(agent_portrayal, 27, 27, 500, 500)
+    grid = CanvasGrid(agent_portrayal, 51, 51, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":250, "width":25, "height":25, "hexogonal": HEX})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":150, "width":51, "height":51, "hexogonal": HEX})
 
 
 server.port = 8422 # The default

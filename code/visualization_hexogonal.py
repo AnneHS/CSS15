@@ -43,7 +43,7 @@ evacueesChart = ChartModule(
     data_collector_name='data_collector'
 )
 
-evacuatedChart = ChartModule(
+evacuatedChart = ChartModule( 
 [{"Label": "Evacuated", "Color": "Green"}],
     data_collector_name='data_collector'
 )

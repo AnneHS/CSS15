@@ -7,6 +7,7 @@ from mesa.datacollection import DataCollector
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+import math
 
 from agent_merge import Pedestrian, Wall
 
@@ -24,11 +25,12 @@ class EvacuationModel(Model):
         self.calm_factor = calm_factor
 
         self.exit_x = self.width - 1
-        self.exit_y = round(self.height/2)
+        self.exit_y = round(self.height/2)-1
 
-        self.push_probs = np.array([[0.,0.],[1.,0.5]])
+        self.push_probs = np.array([[0.,0.],[1, 0.5]])
 
         self.exit_times=[]
+        self.swap_times = []
 
         if self.hex:
             self.grid = HexGrid(self.width, self.height, torus=False)
@@ -45,11 +47,16 @@ class EvacuationModel(Model):
 
         # Add N pedestrians
         taken_pos = []
+        k = int(math.sqrt(self.num_agents))   #for cluster size
         for i in range(self.num_agents):
             # Add the agent to a random grid cell
             while True:
-                x = self.random.randrange(1, self.grid.width-1)
-                y = self.random.randrange(1, self.grid.height-1)
+                #x = self.random.randrange(1, self.grid.width-1)
+                #y = self.random.randrange(1, self.grid.height-1)
+                
+                # initializr in a condensed cluster
+                x = int(i/k) +1
+                y = i%k + int(self.grid.height/2)-int(k/2)
                 pos = (x,y)
                 if not pos in taken_pos:
                     break
@@ -166,4 +173,4 @@ class EvacuationModel(Model):
             self.step()
             steps += 1
 
-        return self.exit_times
+        return self.exit_times, self.swap_times
