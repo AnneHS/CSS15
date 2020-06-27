@@ -46,10 +46,10 @@ for prob in push_prob:
         print(pusher, prob)
         # Load data
         if prob ==0.5:
-            fileName = 'data/HEX100_N300_h25_w25_pr'+ str(pusher) + '_push1.npy'
+            fileName = 'data/old/HEX100_N300_h25_w25_pr'+ str(pusher) + '_push1.npy'
             file = np.load(fileName)
         else:
-            fileName = 'data/HEX100_N300_h25_w25_pr'+ str(pusher) + '_push_f'+ str(prob) +'.npy'
+            fileName = 'data/old/HEX100_N300_h25_w25_pr'+ str(pusher) + '_push_f'+ str(prob) +'.npy'
             file = np.load(fileName)
 
         # Mean, min, max and stds for each run for given parameters

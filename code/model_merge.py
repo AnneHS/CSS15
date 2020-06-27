@@ -149,7 +149,7 @@ class EvacuationModel(Model):
         plt.title("Average = " + str(avg))
         plt.xlabel("Exit time")
         plt.ylabel("Frequence")
-        plt.show()
+        #plt.show()
 
         return
 

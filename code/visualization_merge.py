@@ -9,6 +9,7 @@ from matplotlib import cm, colors
 
 from agent_merge import Pedestrian, Wall
 
+#Change this to false if you want a Moore neighborhood
 HEX = True
 
 model_params = {
@@ -58,13 +59,13 @@ evacuatedChart = ChartModule(
 )
 
 if HEX:
-    grid = CanvasHexGrid(agent_portrayal, 71, 71, 500, 500)
+    grid = CanvasHexGrid(agent_portrayal, 31, 31, 500, 500)
 else:
     grid = CanvasGrid(agent_portrayal, 51, 51, 500, 500)
 
 element_list = [grid, evacueesChart, evacuatedChart]
 
-server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":50, "width":71, "height":71, "hexogonal": HEX})
+server = ModularServer(EvacuationModel, element_list, "Evacuation Model", {"N":49, "width":31, "height":31, "hexogonal": HEX})
 
 
 server.port = 8422 # The default
