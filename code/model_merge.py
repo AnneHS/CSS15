@@ -24,8 +24,13 @@ class EvacuationModel(Model):
         self.fluster_factor = fluster_factor
         self.calm_factor = calm_factor
 
+        #2D
         self.exit_x = self.width - 1
         self.exit_y = round(self.height/2)-1
+
+        #1D
+        #self.exit_x =  round(self.width/2)-1
+        #self.exit_y = rself.height - 1
 
         self.push_probs = np.array([[0.,0.],[1, 0.5]])
 
@@ -40,6 +45,7 @@ class EvacuationModel(Model):
         self.schedule = RandomActivation(self)
 
         inital_mood_prob = 0
+
         # decide for ID whether it is a pusher
         is_pusher = np.zeros(N, dtype = int)
         idx = self.random.sample([i for i in range(N)], int(push_ratio * N))
@@ -51,12 +57,18 @@ class EvacuationModel(Model):
         for i in range(self.num_agents):
             # Add the agent to a random grid cell
             while True:
+                # Random
                 #x = self.random.randrange(1, self.grid.width-1)
                 #y = self.random.randrange(1, self.grid.height-1)
-                
-                # initializr in a condensed cluster
+
+                # initializr in a condensed cluster (2D)
                 x = int(i/k) +1
                 y = i%k + int(self.grid.height/2)-int(k/2)
+
+                # initializr in a condensed cluster (1D)
+                #x = 1
+                # y = i + 1
+
                 pos = (x,y)
                 if not pos in taken_pos:
                     break
@@ -160,7 +172,7 @@ class EvacuationModel(Model):
             self.plot()
             self.running=False
             return
-        
+
         self.schedule.step()
         self.data_collector.collect(self)
 
