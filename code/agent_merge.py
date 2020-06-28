@@ -123,7 +123,7 @@ class Pedestrian(Agent):
             if self.mood_change_prob > self.random.random():
                 self.push = 1
         
-        if self.push == 1:
+        elif self.push == 1:
             if self.model.calm_factor > self.random.random():
                 self.push = 0
 
