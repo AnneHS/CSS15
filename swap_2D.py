@@ -33,8 +33,11 @@ for push in pushers:
         std_swaps = df.std(axis=0)
 
         t = np.arange(0, len(mean_swaps), 1)
+        #comment out below for powerlaw fits
         plt.plot(t[0:350], mean_swaps[0:350], c=col, ls=l, label="N = {}".format(N))
         #plt.errorbar(t, std_swaps, yerr=std_swaps)
+
+        #uncomment out for powerlaw fit graphs
         #fit = powerlaw.Fit(mean_swaps[0:75],xmin=0,discrete=True)
         #fit.power_law.plot_pdf( color= 'k' ,linestyle=l, label='power-law fit')
         #fit.plot_pdf( color= col, label='original')
@@ -48,7 +51,7 @@ for push in pushers:
     plt.xlabel("Time in steps")
     plt.title("pusher's ratio={}".format(push))
     plt.legend()
-    plt.savefig("swapping_ratio{}.png".format(push))
+    #plt.savefig("swapping_ratio{}.png".format(push))
     plt.show()
 
     #ax.plot(pushers, max_val, c=col, marker=m, markerfacecolor='k', markersize=6, ls=l, label="Push Prob = {}".format(prob))

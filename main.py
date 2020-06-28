@@ -42,6 +42,9 @@ def main(iter, N, h, w, hex, pr, ff, cf):
         np.save(fileName, swap_times)
 
 if __name__ == '__main__':
+    #change the below for the type of experiment you want to perform
+    # this will save files in the specified form.
+    #other scripts must be run to plot from npy files
     N = [30,40,50,60,70,80,90,100,110,120,130,140]
     for i in N:
-        main(iter=100, N=i, h=71, w=71, hex=True, pr=0.5, ff=0, cf=0)
+        main(iter=15, N=i, h=71, w=71, hex=True, pr=0.5, ff=0, cf=0)
